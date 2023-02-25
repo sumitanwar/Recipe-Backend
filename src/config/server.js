@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 function Server() {
-  const URI = process.env.URL_DB;
+  const URI = "mongodb+srv://sumitku70:<password>@cluster0.0gkbz0l.mongodb.net/?retryWrites=true&w=majority";
   mongoose.set("strictQuery", false);
   //   mongoose.set("strictQuery", true);
   mongoose.connect(URI, (err) => {
