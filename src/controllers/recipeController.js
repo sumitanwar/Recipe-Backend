@@ -6,6 +6,7 @@ const { uploadImage } = require("../utils/cloudinary");
 //Creating Recipe
 exports.createRecipe = async (req, res, next) => {
   req.body.user = req.user._id;
+  // console.log(req.body.user)
   const recipe = await recipeColl.create(req.body);
   const totalRecipe = await recipeColl.countDocuments();
   uploadImage();

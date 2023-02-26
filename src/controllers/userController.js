@@ -34,20 +34,26 @@ exports.userLogin = async (req, res, next) => {
       message: "Password and Email are mandetory.",
     });
   }
-  let user = await userColl.find({ email }).select("+password");
-  console.log(user.password);
+  const user = await userColl.findOne({ email }).select("+password");
+  // console.log(user.password);
   if (!user) {
     return res
       .status(404)
       .json({ success: false, message: "User Does Not Exist" });
   }
-  // const isPassMatched = await bcrypt.compare(password, user.password);
-  // if (!isPassMatched) {
-  //   return res
-  //     .status(404)
-  //     .json({ success: false, message: "User email or password invalid" });
-  // }
-  sendJwt(user, 200, res);
+  const isPassMatched = await bcrypt.compare(password, user.password);
+  console.log(isPassMatched);
+  if (!isPassMatched) {
+    return res
+      .status(404)
+      .json({ success: false, message: "User email or password invalid" });
+  }
+  // console.log(user.getToken);
+  try {
+    sendJwt(user, 200, res);
+  } catch (err) {
+    res.status(401).json({ success: false, message: err.message });
+  }
 };
 
 // User LogOut

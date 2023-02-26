@@ -17,6 +17,7 @@ const UserSchema = new Schema({
     required: [true, "Enter Password"],
     minLength: [6, "Password should have atleast 6 character"],
     maxLength: [15, "Password should have atmost 15 character"],
+    Selection: false,
   },
 });
 
@@ -27,7 +28,7 @@ UserSchema.methods.getToken = function () {
   return token;
 };
 UserSchema.pre("save", async function () {
-  this.password = bcrypt.hash(this.password, 10);
+  this.password = await bcrypt.hash(this.password, 10);
 });
 const userColl = mongoose.model("users", UserSchema);
 module.exports = userColl;
