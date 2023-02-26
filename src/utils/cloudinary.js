@@ -1,23 +1,15 @@
 const cloudinary = require("cloudinary").v2;
+
+// cloudinary configration
 cloudinary.config({
+  cloud_name: "dhob4oruk", // my cloud name from cloudinary account
+  api_key: "481398383545777", // my api_key from cloudinary account
+  api_secret: "yvbqbmVZahHSuCaFlE0eZ-bLlwc", // my api_sercret from cloudinary account
   secure: true,
 });
-
-exports.uploadImage = async (imagePath) => {
-  // Use the uploaded file's name as the asset's public ID and
-  // allow overwriting the asset with new versions
-  const options = {
-    use_filename: true,
-    unique_filename: false,
-    overwrite: true,
-  };
-
-  try {
-    // Upload the image
-    const result = await cloudinary.uploader.upload(imagePath, options);
-    console.log(result);
+// uploading image to cloudinary
+exports.cloudinaryImg = async (file) => {
+  await cloudinary.uploader.upload(file.tempFilePath, (err, result) => {
     return result;
-  } catch (error) {
-    console.error(error);
-  }
+  });
 };
