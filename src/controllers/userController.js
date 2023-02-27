@@ -29,7 +29,7 @@ exports.userRegisteration = async (req, res, next) => {
 exports.userLogin = async (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    return res.status(404).json({
+    return res.status(403).json({
       success: false,
       message: "Password and Email are mandetory.",
     });
